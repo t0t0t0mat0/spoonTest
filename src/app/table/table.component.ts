@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Sample } from '../sample';
 import { Table } from 'primeng/table';
+import { FileReaderService } from '../services/fileReader.service';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -42,9 +43,11 @@ export class TableComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor(private fileReaderService: FileReaderService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fileReaderService.read();
+  }
 
   applyFilterGlobal($event: any, stringVal: any) {
     this.tableVar!.filterGlobal(
