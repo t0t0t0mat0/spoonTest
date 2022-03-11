@@ -1,0 +1,79 @@
+<p-table
+  #tableVar
+  [value]="samples"
+  styleClass="p-datatable-striped"
+  responsiveLayout="scroll"
+  [filterDelay]="0"
+  [globalFilterFields]="[
+    'sample.packageID',
+    'sample.instrumentID',
+    'sample.isin',
+    'sample.sedol',
+    'sample.cusip'
+  ]"
+>
+  <ng-template pTemplate="caption">
+    <div class="flex">
+      <i class="pi pi-search" style="margin: 5px 5px 0 0"></i>
+      <input
+        pInputText
+        type="text"
+        (input)="applyFilterGlobal($event, 'contains')"
+        placeholder="Filter"
+      />
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="packageID">
+        packageID <p-sortIcon field="packageID"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="packageID"
+          display="menu"
+        ></p-columnFilter>
+      </th>
+      <th pSortableColumn="instrumentID">
+        instrumentID <p-sortIcon field="instrumentID"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="instrumentID"
+          display="menu"
+        ></p-columnFilter>
+      </th>
+      <th pSortableColumn="isin">
+        isin <p-sortIcon field="isin"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="isin"
+          display="menu"
+        ></p-columnFilter>
+      </th>
+      <th pSortableColumn="sedol">
+        sedol <p-sortIcon field="sedol"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="sedol"
+          display="menu"
+        ></p-columnFilter>
+      </th>
+      <th pSortableColumn="cusip">
+        cusip <p-sortIcon field="cusip"></p-sortIcon>
+        <p-columnFilter
+          type="text"
+          field="cusip"
+          display="menu"
+        ></p-columnFilter>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-sample>
+    <tr>
+      <td>{{ sample.packageID }}</td>
+      <td>{{ sample.instrumentID }}</td>
+      <td>{{ sample.isin }}</td>
+      <td>{{ sample.sedol }}</td>
+      <td>{{ sample.cusip }}</td>
+    </tr>
+  </ng-template>
+</p-table>
