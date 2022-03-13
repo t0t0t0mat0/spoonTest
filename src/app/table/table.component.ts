@@ -10,41 +10,10 @@ import { FileReaderService } from '../services/fileReader.service';
 export class TableComponent implements OnInit {
   @ViewChild('tableVar') tableVar: Table | undefined;
   selectedSample: Sample | undefined;
-  display: boolean = false;
+  displaySidebar: boolean = false;
+  isLoading: boolean = true;
 
-  // samples: Sample[] | undefined = undefined;
-  samples: Sample[] | null = [
-    {
-      packageID: 'test',
-      instrumentID: 'test',
-      isin: 'test',
-      sedol: 'test',
-      cusip: 'test',
-      marketID: 'test',
-      type: 'test',
-      name: 'test',
-      currency: 'test',
-      exchange: 'test',
-      maturityDate: 'test',
-      coupon: 1,
-      issueDate: 'test',
-    },
-    {
-      packageID: 'asdf',
-      instrumentID: 'asdf',
-      isin: 'asdf',
-      sedol: 'asdf',
-      cusip: 'asdf',
-      marketID: 'asdf',
-      type: 'asdf',
-      name: 'asdf',
-      currency: 'asdf',
-      exchange: 'asdf',
-      maturityDate: 'asdf',
-      coupon: 2,
-      issueDate: 'asdf',
-    },
-  ];
+  samples: Sample[] | null = null;
 
   constructor(private fileReaderService: FileReaderService) {}
 
@@ -53,7 +22,9 @@ export class TableComponent implements OnInit {
     if (this.fileReaderService.data == null) {
       setTimeout(() => {
         this.samples = this.fileReaderService.data;
+        this.isLoading = false;
       }, 1000);
+    } else {
     }
   }
 
@@ -65,7 +36,7 @@ export class TableComponent implements OnInit {
   }
   onClickTableRow(sample: Sample) {
     this.selectedSample = sample;
-    this.display = !this.display;
+    this.displaySidebar = !this.displaySidebar;
     console.log(this.selectedSample);
     console.log(sample);
   }

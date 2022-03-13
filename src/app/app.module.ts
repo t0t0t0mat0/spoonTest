@@ -10,6 +10,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { TableComponent } from './table/table.component';
 
 import { TableModule } from 'primeng/table';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ProgressBarModule } from 'primeng/progressbar';
 import { ButtonModule } from 'primeng/button';
 import { SidebarModule } from 'primeng/sidebar';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,6 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    ProgressBarModule,
+    ProgressSpinnerModule,
     FlexLayoutModule,
     TableModule,
     HttpClientModule,

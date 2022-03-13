@@ -32,8 +32,8 @@ export class FileReaderService {
 
           const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
 
-          var first_sheet_name = wb.SheetNames[0];
-          var worksheet = wb.Sheets[first_sheet_name];
+          let firstSheetName = wb.SheetNames[0];
+          let worksheet = wb.Sheets[firstSheetName];
 
           this.dataArray = XLSX.utils.sheet_to_json(worksheet, { raw: true });
         };
@@ -45,7 +45,6 @@ export class FileReaderService {
 
           console.log(this.dataArray);
           this.parsedData = this.dataArray.map((s) => {
-            let keys = Object.keys(s);
             let sample: Sample = {
               packageID: s.Search,
               instrumentID: s.Search_1,
