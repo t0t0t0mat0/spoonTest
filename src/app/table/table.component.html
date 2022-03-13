@@ -1,7 +1,9 @@
+<!-- progressbar only loads while table is empty -->
 <ng-container *ngIf="isLoading == true">
   <p-progressBar mode="indeterminate"></p-progressBar>
 </ng-container>
 
+<!-- table containing passed data, only loads if table finds content -->
 <div class="card" *ngIf="samples != null">
   <p-table
     #tableVar
@@ -60,63 +62,67 @@
     </ng-template>
   </p-table>
 </div>
-<p-sidebar
-  [(visible)]="displaySidebar"
-  position="right"
-  [baseZIndex]="10000"
-  [style]="{ width: '35%' }"
->
-  <h3>Sample Details for {{ selectedSample?.name }}</h3>
-  <div fxLayout="row">
-    <div fxFlex="40">packageID:</div>
-    <div fxFlex="60">{{ selectedSample?.packageID }}</div>
-  </div>
-  <div fxLayout="row">
-    <div fxFlex="40">instrumentID:</div>
-    <div fxFlex="60">{{ selectedSample?.instrumentID }}</div>
-  </div>
-  <div fxLayout="row">
-    <div fxFlex="40">isin:</div>
-    <div fxFlex="60">{{ selectedSample?.isin }}</div>
-  </div>
-  <div fxLayout="row">
-    <div fxFlex="40">sedol:</div>
-    <div fxFlex="60">{{ selectedSample?.sedol }}</div>
-  </div>
-  <div fxLayout="row">
-    <div fxFlex="40">cusip:</div>
-    <div fxFlex="60">{{ selectedSample?.cusip }}</div>
-  </div>
-  <div fxLayout="row">
-    <div fxFlex="40">marketID:</div>
-    <div fxFlex="60">{{ selectedSample?.marketID }}</div>
-  </div>
-  <div fxLayout="row">
-    <div fxFlex="40">type:</div>
-    <div fxFlex="60">{{ selectedSample?.type }}</div>
-  </div>
-  <div fxLayout="row">
-    <div fxFlex="40">name:</div>
-    <div fxFlex="60">{{ selectedSample?.name }}</div>
-  </div>
-  <div fxLayout="row">
-    <div fxFlex="40">currency:</div>
-    <div fxFlex="60">{{ selectedSample?.currency }}</div>
-  </div>
-  <div fxLayout="row">
-    <div fxFlex="40">exchange:</div>
-    <div fxFlex="60">{{ selectedSample?.exchange }}</div>
-  </div>
-  <div fxLayout="row">
-    <div fxFlex="40">maturityDate:</div>
-    <div fxFlex="60">{{ selectedSample?.maturityDate }}</div>
-  </div>
-  <div fxLayout="row">
-    <div fxFlex="40">coupon:</div>
-    <div fxFlex="60">{{ selectedSample?.coupon }}</div>
-  </div>
-  <div fxLayout="row">
-    <div fxFlex="40">issueDate:</div>
-    <div fxFlex="60">{{ selectedSample?.issueDate }}</div>
-  </div>
-</p-sidebar>
+
+<!-- sidebar that opens when a table row is clicked -->
+<div class="sidebar">
+  <p-sidebar
+    [(visible)]="displaySidebar"
+    position="right"
+    [baseZIndex]="10000"
+    [style]="{ width: '35%' }"
+  >
+    <h3>Sample Details for {{ selectedSample?.name }}</h3>
+    <div fxLayout="row">
+      <div fxFlex="40">packageID:</div>
+      <div fxFlex="60">{{ selectedSample?.packageID }}</div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="40">instrumentID:</div>
+      <div fxFlex="60">{{ selectedSample?.instrumentID }}</div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="40">isin:</div>
+      <div fxFlex="60">{{ selectedSample?.isin }}</div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="40">sedol:</div>
+      <div fxFlex="60">{{ selectedSample?.sedol }}</div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="40">cusip:</div>
+      <div fxFlex="60">{{ selectedSample?.cusip }}</div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="40">marketID:</div>
+      <div fxFlex="60">{{ selectedSample?.marketID }}</div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="40">type:</div>
+      <div fxFlex="60">{{ selectedSample?.type }}</div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="40">name:</div>
+      <div fxFlex="60">{{ selectedSample?.name }}</div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="40">currency:</div>
+      <div fxFlex="60">{{ selectedSample?.currency }}</div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="40">exchange:</div>
+      <div fxFlex="60">{{ selectedSample?.exchange }}</div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="40">maturityDate:</div>
+      <div fxFlex="60">{{ selectedSample?.maturityDate }}</div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="40">coupon:</div>
+      <div fxFlex="60">{{ selectedSample?.coupon }}</div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="40">issueDate:</div>
+      <div fxFlex="60">{{ selectedSample?.issueDate }}</div>
+    </div>
+  </p-sidebar>
+</div>

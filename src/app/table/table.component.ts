@@ -37,7 +37,5 @@ export class TableComponent implements OnInit {
   onClickTableRow(sample: Sample) {
     this.selectedSample = sample;
     this.displaySidebar = !this.displaySidebar;
-    console.log(this.selectedSample);
-    console.log(sample);
   }
 }

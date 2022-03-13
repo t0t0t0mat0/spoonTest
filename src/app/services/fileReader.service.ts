@@ -11,7 +11,6 @@ export class FileReaderService {
 
   private dataArray: any[] = [];
   private parsedData: Sample[] = [];
-
   private loaded = false;
 
   public get data() {
@@ -21,6 +20,7 @@ export class FileReaderService {
     return null;
   }
 
+  // reads and formats data from sampleData.xlsx and returns usable objects
   read() {
     this.httpClient
       .get('assets/files/sampleData.xlsx', { responseType: 'blob' })
@@ -41,9 +41,10 @@ export class FileReaderService {
         reader.onloadend = (_) => {
           this.loaded = true;
 
+          // removes first two rows as they do not contain relevant data
           this.dataArray = this.dataArray.slice(2);
 
-          console.log(this.dataArray);
+          // maps object values to correct keys
           this.parsedData = this.dataArray.map((s) => {
             let sample: Sample = {
               packageID: s.Search,
@@ -62,10 +63,7 @@ export class FileReaderService {
             };
             return sample;
           });
-
-          console.log(this.parsedData);
         };
-
         reader.readAsBinaryString(data);
       });
   }
