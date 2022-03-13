@@ -1,1 +1,20 @@
-<p>sidebar works!</p>
+<p-sidebar [(visible)]="display" position="right" [baseZIndex]="10000">
+  <h1 style="font-weight: normal">Right Sidebar</h1>
+  <p-button
+    type="button"
+    (click)="display = false"
+    label="Save"
+    styleClass="p-button-success"
+  ></p-button>
+  <p-button
+    type="button"
+    (click)="display = false"
+    label="Cancel"
+    styleClass="p-button-secondary"
+  ></p-button>
+</p-sidebar>
+<p-button
+  type="button"
+  (click)="display = true"
+  icon="pi pi-arrow-left"
+></p-button>

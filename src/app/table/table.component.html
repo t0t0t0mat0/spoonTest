@@ -1,79 +1,113 @@
-<p-table
-  #tableVar
-  [value]="samples"
-  styleClass="p-datatable-striped"
-  responsiveLayout="scroll"
-  [filterDelay]="0"
-  [globalFilterFields]="[
-    'sample.packageID',
-    'sample.instrumentID',
-    'sample.isin',
-    'sample.sedol',
-    'sample.cusip'
-  ]"
->
-  <ng-template pTemplate="caption">
-    <div class="flex">
-      <i class="pi pi-search" style="margin: 5px 5px 0 0"></i>
-      <input
-        pInputText
-        type="text"
-        (input)="applyFilterGlobal($event, 'contains')"
-        placeholder="Filter"
-      />
-    </div>
-  </ng-template>
-  <ng-template pTemplate="header">
-    <tr>
-      <th pSortableColumn="packageID">
-        packageID <p-sortIcon field="packageID"></p-sortIcon>
-        <p-columnFilter
+<div class="card" *ngIf="samples != null">
+  <p-table
+    #tableVar
+    [value]="samples"
+    styleClass="p-datatable-striped"
+    responsiveLayout="scroll"
+    [filterDelay]="0"
+    [globalFilterFields]="[
+      'packageID',
+      'instrumentID',
+      'isin',
+      'sedol',
+      'cusip'
+    ]"
+    selectionMode="single"
+    [(selection)]="selectedSample"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <i class="pi pi-search" style="margin: 5px 5px 0 0"></i>
+        <input
+          pInputText
           type="text"
-          field="packageID"
-          display="menu"
-        ></p-columnFilter>
-      </th>
-      <th pSortableColumn="instrumentID">
-        instrumentID <p-sortIcon field="instrumentID"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="instrumentID"
-          display="menu"
-        ></p-columnFilter>
-      </th>
-      <th pSortableColumn="isin">
-        isin <p-sortIcon field="isin"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="isin"
-          display="menu"
-        ></p-columnFilter>
-      </th>
-      <th pSortableColumn="sedol">
-        sedol <p-sortIcon field="sedol"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="sedol"
-          display="menu"
-        ></p-columnFilter>
-      </th>
-      <th pSortableColumn="cusip">
-        cusip <p-sortIcon field="cusip"></p-sortIcon>
-        <p-columnFilter
-          type="text"
-          field="cusip"
-          display="menu"
-        ></p-columnFilter>
-      </th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-sample>
-    <tr>
-      <td>{{ sample.packageID }}</td>
-      <td>{{ sample.instrumentID }}</td>
-      <td>{{ sample.isin }}</td>
-      <td>{{ sample.sedol }}</td>
-      <td>{{ sample.cusip }}</td>
-    </tr>
-  </ng-template>
-</p-table>
+          (input)="applyFilterGlobal($event, 'contains')"
+          placeholder="Filter"
+        />
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="packageID">
+          packageID <p-sortIcon field="packageID"></p-sortIcon>
+        </th>
+        <th pSortableColumn="instrumentID">
+          instrumentID <p-sortIcon field="instrumentID"></p-sortIcon>
+        </th>
+        <th pSortableColumn="isin">
+          isin <p-sortIcon field="isin"></p-sortIcon>
+        </th>
+        <th pSortableColumn="sedol">
+          sedol <p-sortIcon field="sedol"></p-sortIcon>
+        </th>
+        <th pSortableColumn="cusip">
+          cusip <p-sortIcon field="cusip"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-sample>
+      <tr (click)="onClickTableRow(sample)">
+        <td>{{ sample.packageID }}</td>
+        <td>{{ sample.instrumentID }}</td>
+        <td>{{ sample.isin }}</td>
+        <td>{{ sample.sedol }}</td>
+        <td>{{ sample.cusip }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<p-sidebar [(visible)]="display" position="right" [baseZIndex]="10000">
+  <h3>Sample Details for {{ selectedSample?.name }}</h3>
+  <div fxLayout="row">
+    <div fxFlex="50">packageID:</div>
+    <div fxFlex="50">{{ selectedSample?.packageID }}</div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="50">instrumentID:</div>
+    <div fxFlex="50">{{ selectedSample?.instrumentID }}</div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="50">isin:</div>
+    <div fxFlex="50">{{ selectedSample?.isin }}</div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="50">sedol:</div>
+    <div fxFlex="50">{{ selectedSample?.sedol }}</div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="50">cusip:</div>
+    <div fxFlex="50">{{ selectedSample?.cusip }}</div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="50">marketID:</div>
+    <div fxFlex="50">{{ selectedSample?.marketID }}</div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="50">type:</div>
+    <div fxFlex="50">{{ selectedSample?.type }}</div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="50">name:</div>
+    <div fxFlex="50">{{ selectedSample?.name }}</div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="50">currency:</div>
+    <div fxFlex="50">{{ selectedSample?.currency }}</div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="50">exchange:</div>
+    <div fxFlex="50">{{ selectedSample?.exchange }}</div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="50">maturityDate:</div>
+    <div fxFlex="50">{{ selectedSample?.maturityDate }}</div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="50">coupon:</div>
+    <div fxFlex="50">{{ selectedSample?.coupon }}</div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="50">issueDate:</div>
+    <div fxFlex="50">{{ selectedSample?.issueDate }}</div>
+  </div>
+</p-sidebar>

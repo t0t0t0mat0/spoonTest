@@ -9,8 +9,11 @@ import { FileReaderService } from '../services/fileReader.service';
 })
 export class TableComponent implements OnInit {
   @ViewChild('tableVar') tableVar: Table | undefined;
+  selectedSample: Sample | undefined;
+  display: boolean = false;
 
-  samples: Sample[] = [
+  // samples: Sample[] | undefined = undefined;
+  samples: Sample[] | null = [
     {
       packageID: 'test',
       instrumentID: 'test',
@@ -47,6 +50,11 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.fileReaderService.read();
+    if (this.fileReaderService.data == null) {
+      setTimeout(() => {
+        this.samples = this.fileReaderService.data;
+      }, 1000);
+    }
   }
 
   applyFilterGlobal($event: any, stringVal: any) {
@@ -54,5 +62,11 @@ export class TableComponent implements OnInit {
       ($event.target as HTMLInputElement).value,
       stringVal
     );
+  }
+  onClickTableRow(sample: Sample) {
+    this.selectedSample = sample;
+    this.display = !this.display;
+    console.log(this.selectedSample);
+    console.log(sample);
   }
 }

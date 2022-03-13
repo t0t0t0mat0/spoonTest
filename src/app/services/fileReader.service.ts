@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as XLSX from 'xlsx';
+import { Sample } from '../sample';
 
 @Injectable({
   providedIn: 'root',
@@ -8,38 +9,65 @@ import * as XLSX from 'xlsx';
 export class FileReaderService {
   constructor(private httpClient: HttpClient) {}
 
-  // getData() {
-  //   var workbook = XLSX.readFile('assets/data/sampleData.xlsx');
+  private dataArray: any[] = [];
+  private parsedData: Sample[] = [];
 
-  //   console.log(workbook);
-  // }
+  private loaded = false;
+
+  public get data() {
+    if (this.loaded) {
+      return this.parsedData;
+    }
+    return null;
+  }
+
   read() {
     this.httpClient
       .get('assets/files/sampleData.xlsx', { responseType: 'blob' })
       .subscribe((data: any) => {
         const reader: FileReader = new FileReader();
-        console.log(data);
-
-        let dataJson1;
-        let dataJson2;
 
         reader.onload = (e: any) => {
-          // console.log(e);
           const bstr: string = e.target.result;
+
           const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
 
-          // grab first sheet
-          const wsname1: string = wb.SheetNames[1];
-          const ws1: XLSX.WorkSheet = wb.Sheets[wsname1];
+          var first_sheet_name = wb.SheetNames[0];
+          var worksheet = wb.Sheets[first_sheet_name];
 
-          // save data
-          dataJson1 = XLSX.utils.sheet_to_json(ws1);
-          console.log('Data in sheet 1', dataJson1);
+          this.dataArray = XLSX.utils.sheet_to_json(worksheet, { raw: true });
         };
-        reader.readAsBinaryString(data);
 
-        console.log(data);
-        console.log(dataJson1);
+        reader.onloadend = (_) => {
+          this.loaded = true;
+
+          this.dataArray = this.dataArray.slice(2);
+
+          console.log(this.dataArray);
+          this.parsedData = this.dataArray.map((s) => {
+            let keys = Object.keys(s);
+            let sample: Sample = {
+              packageID: s.Search,
+              instrumentID: s.Search_1,
+              isin: s.Search_2,
+              sedol: s.Search_3 || null,
+              cusip: s.Search_4 || null,
+              marketID: s.__EMPTY,
+              type: s.__EMPTY_1,
+              name: s.__EMPTY_2,
+              currency: s.__EMPTY_3,
+              exchange: s.__EMPTY_4,
+              maturityDate: s.__EMPTY_5 || null,
+              coupon: s.__EMPTY_6 || null,
+              issueDate: s.__EMPTY_7 || null,
+            };
+            return sample;
+          });
+
+          console.log(this.parsedData);
+        };
+
+        reader.readAsBinaryString(data);
       });
   }
 }
